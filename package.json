@@ -1,0 +1,25 @@
+{
+  "name": "node-example-service",
+  "version": "0.0.1",
+  "private": true,
+  "main": "server.js",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "@types/jest": "^24.0.15",
+    "jest": "^24.8.0",
+    "nodemon": "^1.18.10"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "rc": "^1.2.8",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.7"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "lint": "node_modules/.bin/eslint . --fix",
+    "test": "node_modules/.bin/jest",
+    "debug": "nodemon --inspect server.js"
+  },
+  "description": "Example Node microservice"
+}
