@@ -30,8 +30,8 @@ pipeline {
 			steps {
 				container ('node') {
 					// sh 'echo RUNNING_IN = ${RUNNING_IN}'
-					// sh 'npm install'
-					// sh 'npm run test'
+					sh 'npm install'
+					sh 'npm run test'
 				}
 			}
 		}
