@@ -5,10 +5,6 @@ FROM node:11.13.0-alpine
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-# update and install dependency
-RUN apk update && apk upgrade
-RUN apk add git
-
 # copy the app, note .dockerignore
 COPY . /usr/src/app/
 RUN npm install
