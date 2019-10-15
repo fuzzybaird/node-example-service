@@ -39,7 +39,6 @@ pipeline {
 						dockerlogin = sh (script: "aws ecr get-login --no-include-email", returnStdout: true)
 					}
 					container ('docker') {
-						commitId = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
 						sh ("${dockerlogin}")
 						sh ("docker build -t 276042987041.dkr.ecr.us-west-2.amazonaws.com/node-example-service:${commitId}-hash .")
 						sh ("docker push 276042987041.dkr.ecr.us-west-2.amazonaws.com/node-example-service:${commitId}-hash")
