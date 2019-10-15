@@ -15,8 +15,10 @@ pipeline {
   stages {
     stage('capture branch & release info') {
       steps {
+        sh 'printenv'
         container ('docker') {
           sh 'echo RUNNING_IN = ${RUNNING_IN}'
+          sh 'printenv'
         }
       }
     }
