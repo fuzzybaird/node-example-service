@@ -13,14 +13,18 @@ pipeline {
     } // kubernetes
   } // agent
   stages {
-    stage('capture branch & release info') {
+    stage('Gather Release Info') {
       steps {
-        sh 'printenv'
         container ('docker') {
           sh 'echo RUNNING_IN = ${RUNNING_IN}'
           sh 'printenv'
         }
       }
     }
+    stage('Run Unit Tests') {}
+    stage('Build-N-Push to ECR') {}
+    stage('Helm Deploy Feature Env') {}
+    stage('Helm Deploy Stage Env') {}
+    stage('Helm Deploy prod Env') {}
   }
 } // pipeline
