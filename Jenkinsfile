@@ -20,10 +20,7 @@ pipeline {
 	stages {
 		stage('Gather Release Info') {
 			steps {
-				container ('docker') {
-					sh 'echo RUNNING_IN = ${RUNNING_IN}'
-					// sh 'printenv'
-				}
+					sh 'printenv'
 			}
 		}
 		stage('Run Unit Tests') {
@@ -44,8 +41,8 @@ pipeline {
 					container ('docker') {
 						commitId = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
 						sh ("${dockerlogin}")
-						sh ("docker build -t 276042987041.dkr.ecr.us-west-2.amazonaws.com/node-example-service:${commitId} .")
-						sh ("docker push 276042987041.dkr.ecr.us-west-2.amazonaws.com/node-example-service:${commitId}")
+						sh ("docker build -t 276042987041.dkr.ecr.us-west-2.amazonaws.com/node-example-service:${commitId}-hash .")
+						sh ("docker push 276042987041.dkr.ecr.us-west-2.amazonaws.com/node-example-service:${commitId}-hash")
 					}
 				}
 			}       
