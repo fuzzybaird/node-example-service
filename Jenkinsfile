@@ -13,8 +13,8 @@ pipeline {
 			} // kubernetes
 	} // agent
 	environment {
-		AWS_ACCESS_KEY_ID     = credentials('jenkins-aws-secret-key-id')
-		AWS_SECRET_ACCESS_KEY = credentials('jenkins-aws-secret-access-key')
+		AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
+		AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
 		AWS_DEFAULT_REGION    = 'us-west-2'
 	}
 	stages {
