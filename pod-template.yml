@@ -14,6 +14,10 @@ spec:
       limits:
         memory: "2048Mi"
         cpu: "1000m"
+    volumeMounts:
+      - name: dockersock
+        readOnly: false
+        mountPath: "/var/run/docker.sock"
 
   - name: node
     image: node:11.13.0-alpine
@@ -30,7 +34,11 @@ spec:
       limits:
         memory: "1024Mi"
         cpu: "1000m"
-  
+    volumeMounts:
+      - name: dockersock
+        readOnly: false
+        mountPath: "/var/run/docker.sock"
+
   - name: docker
     image: docker:18.02
     env:
@@ -46,6 +54,10 @@ spec:
       limits:
         memory: "2048Mi"
         cpu: "1000m"
+    volumeMounts:
+      - name: dockersock
+        readOnly: false
+        mountPath: "/var/run/docker.sock"
 
   - name: helm
     image: ibmcom/k8s-helm:v2.6.0
@@ -55,3 +67,12 @@ spec:
     env:
     - name: RUNNING_IN
       value: helm
+    volumeMounts:
+      - name: dockersock
+        readOnly: false
+        mountPath: "/var/run/docker.sock"
+  
+  volumes:
+  - name: dockersock
+    hostPath:
+      path: /var/run/docker.sock
