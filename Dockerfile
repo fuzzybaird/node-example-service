@@ -7,7 +7,6 @@ WORKDIR /usr/src/app
 
 # copy the app, note .dockerignore
 COPY . /usr/src/app/
-RUN npm install
 
 # # build necessary, even if no static files are needed,
 # # since it builds the server as well
