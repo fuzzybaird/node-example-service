@@ -21,8 +21,6 @@ spec:
 
   - name: 'docker'
     image: 'docker:18.02'
-    ttyEnabled: true
-    resourceRequestMemory: '1024Mi'
     env:
     - name: RUNNING_IN
       value: "docker"
@@ -40,7 +38,6 @@ spec:
 
   - name: 'helm'
     image: 'ibmcom/k8s-helm:v2.6.0'
-    ttyEnabled: true
     tty: true
     resources:
       requests:
@@ -52,7 +49,6 @@ spec:
     volumeMounts:
       - name: dockersock
         mountPath: "/var/run/docker.sock"
-
   volumes:
   - name: dockersock
     hostPath:
