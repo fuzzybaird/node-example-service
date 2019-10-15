@@ -39,7 +39,7 @@ pipeline {
 			steps {
 				script {
 					container ('aws-cli') {
-						dockerlogin = sh (script: "aws ecr get-login", returnStdout: true)
+						dockerlogin = sh (script: "aws ecr get-login --no-include-email", returnStdout: true)
 					}
 					container ('docker') {
 						sh ("${dockerlogin}")
