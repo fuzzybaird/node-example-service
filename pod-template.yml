@@ -1,6 +1,6 @@
 metadata:
   labels:
-    some-label: some-label-value
+    slave-pod-type: default-node-build
 spec:
   containers:
   - name: jnlp
@@ -14,6 +14,23 @@ spec:
       limits:
         memory: "2048Mi"
         cpu: "1000m"
+
+  - name: node
+    image: node:11.13.0-alpine
+    env:
+    - name: RUNNING_IN
+      value: node
+    command:
+    - cat
+    tty: true
+    resources:
+      requests:
+        memory: "512Mi"
+        cpu: "500m"
+      limits:
+        memory: "1024Mi"
+        cpu: "1000m"
+  
   - name: docker
     image: docker:18.02
     env:
@@ -30,11 +47,11 @@ spec:
         memory: "2048Mi"
         cpu: "1000m"
 
-  - name: busybox
-    image: busybox
+  - name: helm
+    image: ibmcom/k8s-helm:v2.6.0
     command:
     - cat
     tty: true
     env:
     - name: RUNNING_IN
-      value: busybox
+      value: helm
