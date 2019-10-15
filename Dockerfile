@@ -13,7 +13,7 @@ COPY . /usr/src/app/
 # RUN npm run build
 
 # expose 5000 on container
-EXPOSE 80
+EXPOSE 8080
 
 # start the app
 CMD [ "npm", "start" ]
