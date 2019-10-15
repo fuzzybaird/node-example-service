@@ -40,8 +40,8 @@ pipeline {
 					}
 					container ('docker') {
 						sh ("${dockerlogin}")
-						sh ("docker build -t 276042987041.dkr.ecr.us-west-2.amazonaws.com/node-example-service:${commitId}-hash .")
-						sh ("docker push 276042987041.dkr.ecr.us-west-2.amazonaws.com/node-example-service:${commitId}-hash")
+						sh ("docker build -t 276042987041.dkr.ecr.us-west-2.amazonaws.com/node-example-service:${GIT_COMMIT}-hash .")
+						sh ("docker push 276042987041.dkr.ecr.us-west-2.amazonaws.com/node-example-service:${GIT_COMMIT}-hash")
 					}
 				}
 			}       
