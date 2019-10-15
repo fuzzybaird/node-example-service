@@ -21,7 +21,4 @@ pipeline {
       }
     }
   }
-  post {
-      sh 'echo RUNNING_IN = done'
-  } // post
 } // pipeline
