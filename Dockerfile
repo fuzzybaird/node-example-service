@@ -3,7 +3,7 @@ RUN mkdir -p /home/node/app && chown -R node:node /home/node/app
 WORKDIR /home/node/app
 COPY package*.json ./
 USER node
-RUN npm ci
+RUN npm install
 COPY --chown=node:node . .
 EXPOSE 80
 CMD [ "npm", "start" ]
