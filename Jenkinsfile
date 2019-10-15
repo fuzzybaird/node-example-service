@@ -24,20 +24,22 @@ pipeline {
 		stage('Run Unit Tests') {
 			steps {
 				container ('node') {
-					sh 'echo RUNNING_IN = ${RUNNING_IN}'
-					// sh 'npm install'
-					// sh 'npm run test'
+					// sh 'echo RUNNING_IN = ${RUNNING_IN}'
+					sh 'npm install'
+					sh 'npm run test'
 				}
 			}
 		}
 		stage('Build-N-Push to ECR') {
 			steps {
-					sh 'aws ecr get-login'
+				script {
+					docker.build('demo')
 				// echo login
 				// container ('docker') {
-				// 	sh 'npm install'
+					sh 'kubectl get pods'
 				// 	sh 'npm run test'
 				// }
+				}
 			}       
 		}
 		// stage('Helm Deploy Feature') {}
