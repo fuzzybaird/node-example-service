@@ -33,7 +33,7 @@ pipeline {
 			steps {
 
 				step {
-					login = sh(returnStdout: true, script: 'aws ecr get-login').trim()
+					sh 'aws ecr get-login'
 					echo login
 				}
 				// container ('docker') {
