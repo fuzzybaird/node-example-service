@@ -25,20 +25,18 @@ pipeline {
 			steps {
 				container ('node') {
 					// sh 'echo RUNNING_IN = ${RUNNING_IN}'
-					sh 'npm install'
-					sh 'npm run test'
+					// sh 'npm install'
+					// sh 'npm run test'
 				}
 			}
 		}
 		stage('Build-N-Push to ECR') {
 			steps {
 				script {
-					docker.build('demo')
-				// echo login
-				// container ('docker') {
-					sh 'kubectl get pods'
-				// 	sh 'npm run test'
-				// }
+					container ('docker') {
+						sh ("docker build -t ${repository}:${commitId} .")
+						
+					}
 				}
 			}       
 		}
