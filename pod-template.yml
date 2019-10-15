@@ -71,7 +71,20 @@ spec:
       - name: dockersock
         readOnly: false
         mountPath: "/var/run/docker.sock"
-  
+
+  - name: aws-cli
+    image: mesosphere/aws-cli
+    command:
+    - cat
+    tty: true
+    env:
+    - name: RUNNING_IN
+      value: aws-cli
+    volumeMounts:
+      - name: dockersock
+        readOnly: false
+        mountPath: "/var/run/docker.sock"
+
   volumes:
   - name: dockersock
     hostPath:
