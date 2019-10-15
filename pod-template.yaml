@@ -5,26 +5,26 @@ metadata:
     some-label: some-label-value
 spec:
   containers:
-  - name: 'jnlp',
-    image: 'jenkins/jnlp-slave:3.27-1-alpine',
-    args: '${computer.jnlpmac} ${computer.name}',
-    resourceRequestCpu: '500m',
-    resourceRequestMemory: '1024Mi',
-    resourceLimitCpu: '1000m',
+  - name: 'jnlp'
+    image: 'jenkins/jnlp-slave:3.27-1-alpine'
+    args: '${computer.jnlpmac} ${computer.name}'
+    resourceRequestCpu: '500m'
+    resourceRequestMemory: '1024Mi'
+    resourceLimitCpu: '1000m'
     resourceLimitMemory: '2048Mi'
 
-  - name: 'docker',
-    image: 'docker:18.02',
-    ttyEnabled: true,
-    command: 'cat',
+  - name: 'docker'
+    image: 'docker:18.02'
+    ttyEnabled: true
+    command: 'cat'
     resourceRequestMemory: '1024Mi'
     env:
     - name: RUNNING_IN
       value: "docker"
 
-  - name: 'helm',
-    image: 'ibmcom/k8s-helm:v2.6.0',
-    ttyEnabled: true,
+  - name: 'helm'
+    image: 'ibmcom/k8s-helm:v2.6.0'
+    ttyEnabled: true
     command: 'cat'
   volumes:
     - name: dockersock
