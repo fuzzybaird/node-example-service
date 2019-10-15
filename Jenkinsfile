@@ -17,22 +17,23 @@ pipeline {
 			steps {
 				container ('docker') {
 					sh 'echo RUNNING_IN = ${RUNNING_IN}'
-					sh 'printenv'
+					// sh 'printenv'
 				}
 			}
 		}
 		stage('Run Unit Tests') {
 			steps {
 				container ('node') {
-					sh 'npm install'
-					sh 'npm run test'
+					sh 'echo RUNNING_IN = ${RUNNING_IN}'
+					// sh 'npm install'
+					// sh 'npm run test'
 				}
 			}
 		}
 		stage('Build-N-Push to ECR') {
 			steps {
 					sh 'aws ecr get-login'
-					// echo login
+				// echo login
 				// container ('docker') {
 				// 	sh 'npm install'
 				// 	sh 'npm run test'
