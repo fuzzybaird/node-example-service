@@ -31,8 +31,11 @@ pipeline {
 		}
 		stage('Build-N-Push to ECR') {
 			steps {
-				login = sh(returnStdout: true, script: 'aws ecr get-login').trim()
-				echo login
+
+				step {
+					login = sh(returnStdout: true, script: 'aws ecr get-login').trim()
+					echo login
+				}
 				// container ('docker') {
 				// 	sh 'npm install'
 				// 	sh 'npm run test'
