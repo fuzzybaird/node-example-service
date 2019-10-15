@@ -38,9 +38,12 @@ pipeline {
 		stage('Build-N-Push to ECR') {
 			steps {
 				script {
+					container ('aws-cli') {
+						dockerlogin = sh (script: "aws ecr get-login", returnStdout: true)
+					}
 					container ('docker') {
-						sh ("docker build -t experiment:2323 .")
-
+						sh ("${dockerlogin}")
+						sh ("docker build -t 276042987041.dkr.ecr.us-west-2.amazonaws.com/node-example-service .")
 					}
 				}
 			}       
