@@ -5,14 +5,14 @@ spec:
   containers:
   - name: jnlp
     env:
-    - name: CONTAINER_ENV_VAR
+    - name: RUNNING_IN
       value: jnlp
 
-  - name: 'docker'
-    image: 'docker:18.02'
+  - name: docker
+    image: docker:18.02
     env:
-    - name: CONTAINER_ENV_VAR
-      value: jnlp
+    - name: RUNNING_IN
+      value: docker
     command:
     - cat
     tty: true
@@ -23,15 +23,6 @@ spec:
       limits:
         memory: "2048Mi"
         cpu: "1000m"
-
-  - name: maven
-    image: maven:3.3.9-jdk-8-alpine
-    command:
-    - cat
-    tty: true
-    env:
-    - name: CONTAINER_ENV_VAR
-      value: maven
 
   - name: busybox
     image: busybox
@@ -39,62 +30,5 @@ spec:
     - cat
     tty: true
     env:
-    - name: CONTAINER_ENV_VAR
-      value: busybox
-
-
-
-apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    some-label: some-label-value
-spec:
-  containers:
-  - name: jnlp
-    image: jenkins/jnlp-slave:3.27-1-alpine
-    tty: true
-    command:
-    - cat   
-    resources:
-      requests:
-        memory: 1024Mi
-        cpu: 500m
-      limits:
-        memory: 2048Mi
-        cpu: 1000m
-
-  - name: 'docker'
-    image: 'docker:18.02'
-    env:
     - name: RUNNING_IN
-      value: "docker"
-    tty: true
-    resources:
-      requests:
-        memory: "1024Mi"
-        cpu: "500m"
-      limits:
-        memory: "2048Mi"
-        cpu: "1000m"
-    volumeMounts:
-      - name: dockersock
-        mountPath: "/var/run/docker.sock"
-
-  - name: 'helm'
-    image: 'ibmcom/k8s-helm:v2.6.0'
-    tty: true
-    resources:
-      requests:
-        memory: "1024Mi"
-        cpu: "500m"
-      limits:
-        memory: "2048Mi"
-        cpu: "1000m"
-    volumeMounts:
-      - name: dockersock
-        mountPath: "/var/run/docker.sock"
-  volumes:
-  - name: dockersock
-    hostPath:
-      path: /var/run/docker.sock
+      value: busybox
