@@ -34,8 +34,8 @@ pipeline {
 			steps {
 				script {
 					container ('docker') {
-						sh ("docker build -t ${repository}:${commitId} .")
-						
+						sh ("docker build -t experiment:2323 .")
+
 					}
 				}
 			}       
