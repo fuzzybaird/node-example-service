@@ -9,7 +9,7 @@ pipeline {
   agent {
     kubernetes {
       defaultContainer 'jnlp'
-      yamlFile 'pod-template.yaml'
+      yamlFile 'pod-template.yml'
     } // kubernetes
   } // agent
   stages {
