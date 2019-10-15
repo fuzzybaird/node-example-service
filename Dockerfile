@@ -1,5 +1,5 @@
 FROM node:11.13.0-alpine
-RUN chown -R node:node /home/node/app
+RUN mkdir -p /home/node/app && chown -R node:node /home/node/app
 WORKDIR /home/node/app
 COPY package*.json ./
 USER node
