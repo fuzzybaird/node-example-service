@@ -27,8 +27,8 @@ spec:
     ttyEnabled: true
     command: 'cat'
   volumes:
-    - name: dockersock
-      hostPath:
-        path: /var/run/docker.sock
-      mountPath:
-        path: /var/run/docker.sock
+  - name: dockersock
+    hostPath:
+      path: /var/run/docker.sock
+    mountPath:
+      path: /var/run/docker.sock
