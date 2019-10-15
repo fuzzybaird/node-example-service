@@ -10,46 +10,23 @@ pipeline {
     kubernetes {
       defaultContainer 'jnlp'
       yaml '''
-apiVersion: v1
-kind: Pod
 metadata:
   labels:
     some-label: some-label-value
 spec:
   containers:
-  - name: 'jnlp'
-    image: 'jenkins/jnlp-slave:3.27-1-alpine'
-    tty: true
-    resources:
-      requests:
-        memory: "1024Mi"
-        cpu: "500m"
-      limits:
-        memory: "2048Mi"
-        cpu: "1000m"
-    volumeMounts:
-      - name: dockersock
-        mountPath: "/var/run/docker.sock"
-
-  - name: 'docker'
-    image: 'docker:18.02'
+  - name: jnlp
     env:
-    - name: RUNNING_IN
-      value: "docker"
-    tty: true
-    resources:
-      requests:
-        memory: "1024Mi"
-        cpu: "500m"
-      limits:
-        memory: "2048Mi"
-        cpu: "1000m"
-    volumeMounts:
-      - name: dockersock
-        mountPath: "/var/run/docker.sock"
+    - name: CONTAINER_ENV_VAR
+      value: jnlp
 
-  - name: 'helm'
-    image: 'ibmcom/k8s-helm:v2.6.0'
+  - name: docker
+    image: docker:18.02
+    env:
+    - name: CONTAINER_ENV_VAR
+      value: jnlp
+    command:
+    - cat
     tty: true
     resources:
       requests:
@@ -58,13 +35,15 @@ spec:
       limits:
         memory: "2048Mi"
         cpu: "1000m"
-    volumeMounts:
-      - name: dockersock
-        mountPath: "/var/run/docker.sock"
-  volumes:
-  - name: dockersock
-    hostPath:
-      path: /var/run/docker.sock
+
+  - name: busybox
+    image: busybox
+    command:
+    - cat
+    tty: true
+    env:
+    - name: CONTAINER_ENV_VAR
+      value: busybox
 
 '''
     } // kubernetes
