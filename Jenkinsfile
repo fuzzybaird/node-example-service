@@ -51,26 +51,40 @@ pipeline {
 					}
 					container ('docker') {
 						sh ("${dockerlogin}")
-						sh ("docker build -t 276042987041.dkr.ecr.us-west-2.amazonaws.com/node-example-service:${GIT_COMMIT}-hash .")
-						sh ("docker push 276042987041.dkr.ecr.us-west-2.amazonaws.com/node-example-service:${GIT_COMMIT}-hash")
+						sh ("docker build -t 276042987041.dkr.ecr.us-west-2.amazonaws.com/node-example-service:${GIT_COMMIT} .")
+						sh ("docker push 276042987041.dkr.ecr.us-west-2.amazonaws.com/node-example-service:${GIT_COMMIT}")
 					}
 				}
 			}       
 		}
 		stage('Helm Deploy Feature') {
+			when { environment name: 'IS_FEATURE', value: 'true'}
 			steps {
 				container ('helm') {
 					sh "/helm init --client-only --skip-refresh"
 					sh "/helm upgrade --install --force --wait \
 						--set image.repository='276042987041.dkr.ecr.us-west-2.amazonaws.com/node-example-service' \
-						--set image.tag='${GIT_COMMIT}-hash' \
+						--set image.tag='${GIT_COMMIT}' \
 						--set vgateway.host='sre.aws.chgit.com' \
-						node-example-service \
+						${PROJECT} \
 						./deployment"
 				}
 			}
 		}
-		// stage('Helm Deploy Stage') {}
+		stage('Helm Deploy Stage') {
+			when { environment name: 'IS_MASTER', value: 'true'}
+			steps {
+				container ('helm') {
+					sh "/helm init --client-only --skip-refresh"
+					sh "/helm upgrade --install --force --wait \
+						--set image.repository='276042987041.dkr.ecr.us-west-2.amazonaws.com/node-example-service' \
+						--set image.tag='${GIT_COMMIT}' \
+						--set vgateway.host='sre.aws.chgit.com' \
+						${PROJECT} \
+						./deployment"
+				}
+			}
+		}
 		// stage('Helm Deploy Prod') {}
 	}
 } // pipeline
