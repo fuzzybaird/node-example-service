@@ -55,7 +55,7 @@ pipeline {
 						--set image.repository='276042987041.dkr.ecr.us-west-2.amazonaws.com/node-example-service' \
 						--set image.tag='${GIT_COMMIT}-hash' \
 						--set vgateway.host='sre.aws.chgit.com' \
-						feature-node-example-service \
+						node-example-service \
 						./deployment"
 				}
 			}
