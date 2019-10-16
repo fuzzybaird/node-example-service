@@ -27,7 +27,7 @@ pipeline {
 				    sh 'printenv'
 					IS_FEATURE = (GIT_BRANCH =~ /^([fF]eature|[bB]ug|[wW]arm[fF]ix|hot[fF]ix)\/[a-zA-Z]+-[0-9]+/) ? 'true' : 'false'
 					IS_MASTER = (GIT_BRANCH =~ /master/) ? 'true' : 'false'
-					PROJECT = sh (script: "./bin/getprojectname.sh", returnStdout: true)
+					PROJECT = sh (script: "./bin/getprojectname.sh", returnStdout: true).trim()
 					echo "PROJECT:${PROJECT}"
 					echo "IS_FEATURE:${IS_FEATURE}"
 					echo "IS_MASTER:${IS_MASTER}"
