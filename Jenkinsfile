@@ -25,8 +25,8 @@ pipeline {
 			steps {
 				script {
 				    sh 'printenv'
-					def IS_FEATURE = (GIT_BRANCH =~ /^([fF]eature|[bB]ug|[wW]arm[fF]ix|hot[fF]ix)\/[a-zA-Z]+-[0-9]+/) ? 'true' : 'false'
-					def IS_MASTER = (GIT_BRANCH =~ /master/) ? 'true' : 'false'
+					IS_FEATURE = (GIT_BRANCH =~ /^([fF]eature|[bB]ug|[wW]arm[fF]ix|hot[fF]ix)\/[a-zA-Z]+-[0-9]+/) ? 'true' : 'false'
+					IS_MASTER = (GIT_BRANCH =~ /master/) ? 'true' : 'false'
 					PROJECT = sh (script: "./bin/getprojectname.sh", returnStdout: true)
 					echo "PROJECT:${PROJECT}"
 					echo "IS_FEATURE:${IS_FEATURE}"
@@ -58,7 +58,7 @@ pipeline {
 			}       
 		}
 		stage('Helm Deploy Feature') {
-			when { environment name: 'IS_FEATURE', value: 'true'}
+			when { expression { return "yes" == IS_FEATURE } }
 			steps {
 				container ('helm') {
 					sh "/helm init --client-only --skip-refresh"
@@ -72,7 +72,7 @@ pipeline {
 			}
 		}
 		stage('Helm Deploy Stage') {
-			when { environment name: 'IS_MASTER', value: 'true'}
+			when { expression { return "yes" == IS_MASTER } }
 			steps {
 				container ('helm') {
 					sh "/helm init --client-only --skip-refresh"
