@@ -24,8 +24,11 @@ pipeline {
 		stage('Gather Release Info') {
 			steps {
 				script {
+				    sh 'printenv'
 					def IS_FEATURE = (GIT_BRANCH =~ /^([fF]eature|[bB]ug|[wW]arm[fF]ix|hot[fF]ix)\/[a-zA-Z]+-[0-9]+/) ? 'true' : 'false'
 					def IS_MASTER = (GIT_BRANCH =~ /master/) ? 'true' : 'false'
+					PROJECT = sh (script: "./bin/getprojectname.sh", returnStdout: true)
+					echo "PROJECT:${PROJECT}"
 					echo "IS_FEATURE:${IS_FEATURE}"
 					echo "IS_MASTER:${IS_MASTER}"
 				}
