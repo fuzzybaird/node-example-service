@@ -16,12 +16,15 @@ pipeline {
 		AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
 		AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
 		AWS_DEFAULT_REGION    = 'us-west-2'
-		TEST_VARIABLE         = "string${AWS_DEFAULT_REGION}"
+		PROJECT               = '###NOT_DEFINED###'
 	}
 	stages {
 		stage('Gather Release Info') {
 			steps {
-					sh 'printenv'
+				script {
+					def TEMP_PROJECT = "${PROJECT} - test"
+					echo TEMP_PROJECT
+				}
 			}
 		}
 		stage('Run Unit Tests') {
