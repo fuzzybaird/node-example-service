@@ -46,7 +46,21 @@ pipeline {
 				}
 			}       
 		}
-		// stage('Helm Deploy Feature') {}
+		stage('Helm Deploy Feature') {
+			steps {
+				container ('helm') {
+					sh "/helm init --client-only --skip-refresh"
+					sh "
+						helm upgrade --install --force --wait \
+						--set image.repository='276042987041.dkr.ecr.us-west-2.amazonaws.com/node-example-service' \
+						--set image.tag='${GIT_COMMIT}-hash' \
+						--set vgateway.host="sre.aws.chgit.com" \
+						--name node-example-service \
+						./deployment
+					"
+				}
+			}
+		}
 		// stage('Helm Deploy Stage') {}
 		// stage('Helm Deploy Prod') {}
 	}
