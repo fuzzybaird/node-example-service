@@ -51,8 +51,8 @@ pipeline {
 					}
 					container ('docker') {
 						sh ("${dockerlogin}")
-						sh ("docker build -t 276042987041.dkr.ecr.us-west-2.amazonaws.com/node-example-service:${GIT_COMMIT} .")
-						sh ("docker push 276042987041.dkr.ecr.us-west-2.amazonaws.com/node-example-service:${GIT_COMMIT}")
+						sh ("docker build -t 276042987041.dkr.ecr.us-west-2.amazonaws.com/${PROJECT}:${GIT_COMMIT} .")
+						sh ("docker push 276042987041.dkr.ecr.us-west-2.amazonaws.com/${PROJECT}:${GIT_COMMIT}")
 					}
 				}
 			}       
@@ -63,7 +63,7 @@ pipeline {
 				container ('helm') {
 					sh "/helm init --client-only --skip-refresh"
 					sh "/helm upgrade --install --force --wait \
-						--set image.repository='276042987041.dkr.ecr.us-west-2.amazonaws.com/node-example-service' \
+						--set image.repository='276042987041.dkr.ecr.us-west-2.amazonaws.com/${PROJECT}' \
 						--set image.tag='${GIT_COMMIT}' \
 						--set vgateway.host='sre.aws.chgit.com' \
 						${PROJECT} \
@@ -77,7 +77,7 @@ pipeline {
 				container ('helm') {
 					sh "/helm init --client-only --skip-refresh"
 					sh "/helm upgrade --install --force --wait \
-						--set image.repository='276042987041.dkr.ecr.us-west-2.amazonaws.com/node-example-service' \
+						--set image.repository='276042987041.dkr.ecr.us-west-2.amazonaws.com/${PROJECT}' \
 						--set image.tag='${GIT_COMMIT}' \
 						--set vgateway.host='sre.aws.chgit.com' \
 						${PROJECT} \
