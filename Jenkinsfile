@@ -16,7 +16,7 @@ pipeline {
 		AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
 		AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
 		AWS_DEFAULT_REGION    = 'us-west-2'
-		TEST_VARIABLE         = "string ${AWS_DEFAULT_REGION}"
+		TEST_VARIABLE         = "string${AWS_DEFAULT_REGION}"
 	}
 	stages {
 		stage('Gather Release Info') {
@@ -55,7 +55,7 @@ pipeline {
 						--set image.repository='276042987041.dkr.ecr.us-west-2.amazonaws.com/node-example-service' \
 						--set image.tag='${GIT_COMMIT}-hash' \
 						--set vgateway.host='sre.aws.chgit.com' \
-						node-example-service \
+						feature-node-example-service \
 						./deployment"
 				}
 			}
