@@ -68,7 +68,7 @@ pipeline {
 						--set image.repository='276042987041.dkr.ecr.us-west-2.amazonaws.com/${PROJECT}' \
 						--set image.tag='${GIT_COMMIT}' \
 						--set vgateway.host='sre.aws.chgit.com' \
-						${FESTURE_NAME}-${PROJECT} \
+						${FESTURE_NAME}--${PROJECT} \
 						./deployment"
 				}
 			}
