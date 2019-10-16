@@ -17,13 +17,17 @@ pipeline {
 		AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
 		AWS_DEFAULT_REGION    = 'us-west-2'
 		PROJECT               = '###NOT_DEFINED###'
+		IS_FEATURE            = 'false'
+		IS_MASTER             = 'false'
 	}
 	stages {
 		stage('Gather Release Info') {
 			steps {
 				script {
-					def TEMP_PROJECT = "${PROJECT} - test"
-					echo TEMP_PROJECT
+					def IS_FEATURE = (GIT_BRANCH =~ /^([fF]eature|[bB]ug|[wW]arm[fF]ix|hot[fF]ix)\/[a-zA-Z]+-[0-9]+/) ? 'true' : 'false'
+					def IS_MASTER = (GIT_BRANCH =~ /master/) ? 'true' : 'false'
+					echo "IS_FEATURE:${IS_FEATURE}"
+					echo "IS_MASTER:${IS_MASTER}"
 				}
 			}
 		}
