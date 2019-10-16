@@ -25,14 +25,14 @@ pipeline {
 		stage('Gather Release Info') {
 			steps {
 				script {
-				    sh 'printenv'
 					IS_FEATURE = (GIT_BRANCH =~ /^([fF]eature|[bB]ug|[wW]arm[fF]ix|hot[fF]ix)\/[a-zA-Z]+-[0-9]+/) ? 'true' : 'false'
 					IS_MASTER = (GIT_BRANCH =~ /master/) ? 'true' : 'false'
 					PROJECT = sh (script: "./bin/getprojectname.sh", returnStdout: true).trim()
 					FESTURE_NAME = sh (script: "./bin/getfeaturename.sh", returnStdout: true).trim()
-					echo "PROJECT:${PROJECT}"
-					echo "IS_FEATURE:${IS_FEATURE}"
-					echo "IS_MASTER:${IS_MASTER}"
+					sh 'printenv'
+					if (IS_FEATURE == 'false' && IS_MASTER == 'false') {
+						error("Build failed because there are no appropriately named branches to build")
+					}
 				}
 			}
 		}
@@ -46,6 +46,7 @@ pipeline {
 			}
 		}
 		stage('Build-N-Push to ECR') {
+			when { expression { return "true" == IS_MASTER } }
 			steps {
 				script {
 					container ('aws-cli') {
