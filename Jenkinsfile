@@ -58,7 +58,7 @@ pipeline {
 			}       
 		}
 		stage('Helm Deploy Feature') {
-			when { expression { return "yes" == IS_FEATURE } }
+			when { expression { return "true" == IS_FEATURE } }
 			steps {
 				container ('helm') {
 					sh "/helm init --client-only --skip-refresh"
@@ -72,7 +72,7 @@ pipeline {
 			}
 		}
 		stage('Helm Deploy Stage') {
-			when { expression { return "yes" == IS_MASTER } }
+			when { expression { return "true" == IS_MASTER } }
 			steps {
 				container ('helm') {
 					sh "/helm init --client-only --skip-refresh"
