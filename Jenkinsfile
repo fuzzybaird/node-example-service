@@ -46,7 +46,6 @@ pipeline {
 			}
 		}
 		stage('Build-N-Push to ECR') {
-			when { expression { return "true" == IS_MASTER } }
 			steps {
 				script {
 					container ('aws-cli') {
